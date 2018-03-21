@@ -15,6 +15,7 @@ class CommentsController {
   init() {
     // kick off controller from here
     this.addCommentFormListener();
+    
   }
 
 
@@ -30,27 +31,28 @@ class CommentsController {
 
     		// grab the imageId + comment
     		var imageID = $(this).parent("ul").attr("data-id");
-    		//var imageID = "image-" + rawID;
-    		//var commentID = "comments-" + rawID;
-    		var $commentDesc = $('#comment-description-' + imageID);
+    		var commentDesc = $('#comment-description-' + imageID).val();
 
-    		console.log("I need to add " + $($commentDesc).val() + " as a new comment");
-    		// create a new Comment 
-    		var myComment = new Comment($($commentDesc).val(), imageID);
-    		//CommentsController.render(myComment);
+    		console.log("I need to add " + commentDesc + " as a new comment");
+    		// create a new Comment using imageID + comment
+    		var myComment = new Comment(commentDesc, imageID);
+    		// console.log(myComment);
+
+    		// passs the "image object" (probably means comment object) to the render function
+    		//commentsController.render(myComment);
+    		var aCommentController = new CommentsController();
+    		aCommentController.render(myComment);
     	});
-
     	
     }
   }
   render(commentObject) {
-  	console.log(commentObject);
-  	var imageId = $(commentObject).attr("data-id");
-  	console.log(imageId);
-
-  	$("#comments-"+ imageId).append('<li id="comment-' + imageId + '">' + this.commentContent + '</li>');
+  	//console.log(commentObject);
   	
-  	return true;
+  	//Select the comments box with this id and add the commentObject comment content
+  	$("#comments-"+ commentObject.imageId).append('<li id="comment-' + commentObject.imageId + '">' + commentObject.commentContent + '</li>');
+  	
+  	return;
   }
   
 }

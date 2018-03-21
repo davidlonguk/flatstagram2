@@ -1,6 +1,6 @@
+// comment model
 class Comment {
   constructor(comment, imageId) {
-  	
   	this.imageId = imageId; 
   	this.commentContent = comment;
   	this.all = this.findAll(this.imageId);
@@ -13,11 +13,7 @@ class Comment {
   }
 
   findImage(imageId) {
-  	var imageEl = $("#image-" + imageId);
-  	this.addComment();
-  	var test = commentsController.render(this);
-  	console.log(test);
-  	return imageEl;
+  	return Image.all[imageId];
   }
   findAll(imageId) {
     	
@@ -29,9 +25,9 @@ class Comment {
 
 	 	return allComments;
 	}
-  addComment() {
+ /* addComment() {
   	$("#comments-"+ this.imageId).append('<li id="comment-' + this.id + '">' + this.commentContent + '</li>');
-  }
+  } */
   commentEl() {
   	var commentHTML = $("#comment-" + this.id).prop("outerHTML");
   	return commentHTML
