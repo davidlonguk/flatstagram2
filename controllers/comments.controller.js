@@ -36,26 +36,26 @@ class CommentsController {
     		var myComment = new Comment(commentDesc, imageID);
 
     		// passs the "image object" (probably means comment object) to the render function
-    		var imageObj = myComment.imageObj;
-    		console.log(imageObj.comments);
+    		// var imageObj = myComment.imageObj;
+    		// console.log(imageObj.comments);
     		var aCommentController = new CommentsController();
     		aCommentController.render(myComment);
     	});
   }
   render(commentObject) {
-  	//console.log(commentObject);
   	// check if comment has already been rendered
-  	if ( $("#comment-" + commentObject.id).length ) {
-  		// comment already exists add message to console 
+  	if ( $("#comment-"+ commentObject.imageId + "-" + commentObject.id).length ) {
+  		// comment with this ID already exists add message to console 
   		console.log("Comment already rendered");
-  		
+  		// possible method for allowing overwriting of existing comment
+  		//$("#comment-" + commentObject.imageId + "-" + commentObject.id).html(commentObject.commentEl());
   	} else {
   		//Select the comments box with this id and add the commentObject comment html	
   		$("#comments-"+ commentObject.imageId).append(commentObject.commentEl());
+  		
   		// optional fade in of new comment
-  		$("#comment-"+ commentObject.id).css({opacity: 0});
-  		$("#comment-"+ commentObject.id).animate({opacity: 1}, 500);
-
+  		$("#comment-"+ commentObject.imageId + "-" + commentObject.id).css({opacity: 0});
+  		$("#comment-"+ commentObject.imageId + "-" + commentObject.id).animate({opacity: 1}, 500);
   	}
   } 
 }
