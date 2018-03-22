@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 // comment model
 class Comment {
   constructor(comment, imageId) {
@@ -6,28 +7,29 @@ class Comment {
   	this.all = this.findAll(this.imageId);
     this.id = this.all.length;
     this.imageObj = this.findImage(this.imageId);
-    
+    this.init();
   }
   init() {
-  	
+  	this.all.push({id: this.id, content: this.commentContent});
   }
 
   findImage(imageId) {
   	return Image.all[imageId];
   }
+
   findAll(imageId) {
     	
   		var allComments = [];
 	  	
 	  	for (var i = 0; i < $("#comments-" + imageId + "> li").length; i++) {
-	  		allComments.push($("#comments-" + imageId + "> li")[i]);
+	  		
+	  		var commentContent = $($("#comments-" + imageId + "> li")[i]).html();
+	  		allComments.push({id: i, content: commentContent});
 	  	}
 
 	 	return allComments;
 	}
- /* addComment() {
-  	$("#comments-"+ this.imageId).append('<li id="comment-' + this.id + '">' + this.commentContent + '</li>');
-  } */
+ 
   commentEl() {
   	var commentHTML = $("#comment-" + this.id).prop("outerHTML");
   	return commentHTML
