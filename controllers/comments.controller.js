@@ -36,7 +36,8 @@ class CommentsController {
     		var myComment = new Comment(commentDesc, imageID);
 
     		// passs the "image object" (probably means comment object) to the render function
-    		//commentsController.render(myComment);
+    		var imageObj = myComment.imageObj;
+    		console.log(imageObj.comments);
     		var aCommentController = new CommentsController();
     		aCommentController.render(myComment);
     	});
@@ -50,7 +51,11 @@ class CommentsController {
   		
   	} else {
   		//Select the comments box with this id and add the commentObject comment html	
-  		$("#comments-"+ commentObject.imageId).append(commentObject.commentEl());	
+  		$("#comments-"+ commentObject.imageId).append(commentObject.commentEl());
+  		// optional fade in of new comment
+  		$("#comment-"+ commentObject.id).css({opacity: 0});
+  		$("#comment-"+ commentObject.id).animate({opacity: 1}, 500);
+
   	}
   } 
 }

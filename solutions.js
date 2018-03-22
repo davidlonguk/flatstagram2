@@ -47,6 +47,9 @@ class CommentsController {
     } else {
       //Select the comments box with this id and add the commentObject comment html 
       $("#comments-"+ commentObject.imageId).append(commentObject.commentEl()); 
+      // optional fade in of new comment
+      $("#comment-"+ commentObject.id).css({opacity: 0});
+      $("#comment-"+ commentObject.id).animate({opacity: 1}, 500);
     }
   } 
 }

@@ -6,11 +6,15 @@ class Comment {
   	// initialize with an id, image object (findImage) and commentContent (the actual text of the comment)
   	this.imageId = imageId; 
   	this.commentContent = comment;
-  	this.all = this.findAll(this.imageId);
-    this.id = this.all.length;
+  	// this.all = this.findAll(this.imageId);
+    
     this.imageObj = this.findImage(this.imageId);
+    this.all = this.imageObj.comments;
+
+    this.id = this.all.length -1;
+    console.log("comment id: " + this.id);
     // save new comment to Comment.all property
-    this.all.push({id: this.id, content: this.commentContent});
+    //this.all.push({id: this.id, content: this.commentContent});
   }
 
 
@@ -19,7 +23,7 @@ class Comment {
   	var imageObj = Image.all[imageId];
 
   	// add current comment to image's comments property
-  	imageObj.comments.push({id: this.id, content: this.commentContent});
+  	imageObj.comments.push({id: imageObj.comments.length, content: this.commentContent});
 
   	return imageObj;
   }
