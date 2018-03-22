@@ -27,13 +27,13 @@ class CommentsController {
     this.$addCommentForm.submit(function(event){
     		event.preventDefault();
     		// grab the imageId + comment
-    		var imageID = $(this).parent("ul").attr("data-id");
-    		var commentDesc = $('#comment-description-' + imageID).val();
+    		var imageID = parseInt($(this).parent("ul").attr("data-id"));
 
-    		console.log("I need to add " + commentDesc + " as a new comment");
+    		// includes a basic way to prevent XSS or other nasties. If needed we could use a sanitizing library
+    		var commentDesc = $( $.parseHTML( $('#comment-description-' + imageID).val() )).text();
+    		
     		// create a new Comment using imageID + comment
     		var myComment = new Comment(commentDesc, imageID);
-    		// console.log(myComment);
 
     		// passs the "image object" (probably means comment object) to the render function
     		//commentsController.render(myComment);
@@ -43,8 +43,14 @@ class CommentsController {
   }
   render(commentObject) {
   	//console.log(commentObject);
-  	//Select the comments box with this id and add the commentObject comment content
-  	$("#comments-"+ commentObject.imageId).append('<li id="comment-' + commentObject.imageId + '">' + commentObject.commentContent + '</li>');	
-  	return;
+  	// check if comment has already been rendered
+  	if ( $("#comment-" + commentObject.id).length ) {
+  		// comment already exists add message to console 
+  		console.log("Comment already rendered");
+  		
+  	} else {
+  		//Select the comments box with this id and add the commentObject comment html	
+  		$("#comments-"+ commentObject.imageId).append(commentObject.commentEl());	
+  	}
   } 
 }
