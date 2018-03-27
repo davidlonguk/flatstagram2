@@ -27,26 +27,43 @@ class CommentsController {
     this.$addCommentForm.submit(function(event){
     		event.preventDefault();
     		// grab the imageId + comment
-    		var imageID = parseInt($(this).parent("ul").attr("data-id"));
+    		let imageID = parseInt($(this).parent("ul").attr("data-id"));
 
     		// includes a basic way to prevent XSS or other nasties. If needed we could use a sanitizing library
-    		var commentDesc = $( $.parseHTML( $('#comment-description-' + imageID).val() )).text();
+    		let commentDesc = $( $.parseHTML( $('#comment-description-' + imageID).val() )).text();
     		
+        let imageComments = Image.all[imageID].comments;
+        //console.log(imageComments.length);
+        for(let i=0; i < imageComments.length; i++) {
+              console.log(imageComments[i].content);
+              if (imageComments[i].content == commentDesc) {
+                  alert("Someone already made this same comment!");
+                  return;
+                } 
+        }
+        
+        
+
     		// create a new Comment using imageID + comment
-    		var myComment = new Comment(commentDesc, imageID);
+    		let myComment = new Comment(commentDesc, imageID);
 
     		// passs the "image object" (probably means comment object) to the render function
     		// var imageObj = myComment.imageObj;
     		// console.log(imageObj.comments);
-    		var aCommentController = new CommentsController();
+    		let aCommentController = new CommentsController();
     		aCommentController.render(myComment);
     	});
   }
   render(commentObject) {
+
+
+
   	// check if comment has already been rendered
   	if ( $("#comment-"+ commentObject.imageId + "-" + commentObject.id).length ) {
   		// comment with this ID already exists add message to console 
   		console.log("Comment already rendered");
+
+
   		// possible method for allowing overwriting of existing comment
   		//$("#comment-" + commentObject.imageId + "-" + commentObject.id).html(commentObject.commentEl());
   	} else {

@@ -19,8 +19,8 @@ class Comment {
 
   // findImage - given an `int` for an image id, returns the image object with that id
   findImage(imageId) {
-  	var imageObj = Image.all[imageId];
-
+  	let imageObj = Image.all[imageId];
+    
   	// add current comment to image's comments property
   	imageObj.comments.push({id: imageObj.comments.length, content: this.commentContent});
 
@@ -31,7 +31,7 @@ class Comment {
  	// returns a string of html
   commentEl() {
   	// html has an `li` tag with an `id` field and shows the comment
-  	var commentHTML = '<li id="comment-' + this.imageId + "-" + this.id + '">' + this.commentContent + '</li>';
+  	let commentHTML = '<li id="comment-' + this.imageId + "-" + this.id + '">' + this.commentContent + '</li>';
 
   	return commentHTML;
   }
